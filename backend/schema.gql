@@ -1,0 +1,13 @@
+type Query {
+  userNeeds: [UserNeed]!
+}
+
+type Mutation {
+  addUserNeed(name: String, description: String): UserNeed!
+}
+
+type UserNeed {
+  id: ID!
+  name: String
+  description: String
+}

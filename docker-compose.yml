@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=unm
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=secret_password
