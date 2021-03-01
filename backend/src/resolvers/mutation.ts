@@ -10,6 +10,13 @@ const mutationResolvers = {
     userNeed.description = description
     console.log('✔️ User need created')
     return await conn.manager.save(userNeed)
+  },
+  deleteUserNeed: async (_: any, { id }) => {
+    const conn = await getConnection()
+    const userNeedRepo = conn.getRepository(UserNeed)
+    const userNeed = await conn.manager.findOne(UserNeed, id)
+    await userNeedRepo.remove([userNeed])
+    return id
   }
 
 }

@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import * as express from "express"
 import { readFileSync } from 'fs'
-import { PORT } from './config'
 import { ApolloServer, gql } from 'apollo-server-express'
+import { PORT } from './config'
 import Mutation from './resolvers/mutation'
 import Query from './resolvers/query'
 
@@ -15,8 +15,15 @@ const resolvers = {
 }
 
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({
+  typeDefs, resolvers,
+})
 server.applyMiddleware({ app })
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  next()
+})
 
 app.listen(PORT, () => {
   console.log('🚀 Codename UNM running')

@@ -1,19 +1,35 @@
-import { Heading, Grid, GridItem } from "@chakra-ui/react"
+import { Heading, Grid, GridItem, Container } from "@chakra-ui/react"
 import { CheckCircleIcon } from "@chakra-ui/icons"
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Menu from './components/menu'
+import Needs from './pages/needs'
 
 function App() {
   return (
-    <div className="App">
-      <header style={{padding: '1em'}} className="App-header">
-        <Heading><CheckCircleIcon/> Codename UNM</Heading>
-      </header>
-      <Grid
-        templateColumns="200px auto"
-      >
-        <GridItem>Menu</GridItem>
-        <GridItem>mainContent</GridItem>
-      </Grid>
-    </div>
+    <Router>
+      <Container maxWidth={"1200px"}>
+        <header style={{ padding: '1em' }} className="App-header">
+          <Heading><CheckCircleIcon /> Codename UNM</Heading>
+        </header>
+        <Grid
+          templateColumns="200px auto"
+        >
+          <GridItem>
+            <Menu />
+          </GridItem>
+          <GridItem>
+            <Switch>
+              <Route exact path="/">
+                HomePage
+              </Route>
+              <Route path="/needs">
+                <Needs />
+              </Route>
+            </Switch>
+          </GridItem>
+        </Grid>
+      </Container>
+    </Router>
   );
 }
 
