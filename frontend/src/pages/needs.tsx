@@ -5,8 +5,6 @@ import {
   Heading,
   SimpleGrid,
   Spacer,
-  HStack,
-  VStack,
   Flex,
   Button
 } from '@chakra-ui/react'
@@ -21,6 +19,7 @@ export default function Needs() {
   const { loading, error, data } = useQuery(GET_USER_NEEDS)
 
   const userNeeds = data?.userNeeds || []
+  console.log(userNeeds)
 
   return (
     <div>
@@ -32,6 +31,9 @@ export default function Needs() {
           <Box borderWidth="1px" key={i} maxW="sm" p="6" borderRadius="lg">
             <Flex height="100%" direction="column">
               <Box>
+                <Text color="gray.500">
+                  {need.stakeholder?.name}
+                </Text>
                 <Text fontWeight="bold">
                   {need.name}
                 </Text>

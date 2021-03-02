@@ -28,30 +28,13 @@ export default function UserNeed({ id }:any) {
   })
 
   const userNeed = data?.userNeed
-  // const { form, setValue } = useForm()
-  // const toast = useToast()
-  // const [addUserNeed] = useMutation(ADD_USER_NEED, {
-  //   refetchQueries: [{ query: GET_USER_NEEDS }]
-  // });
-  // function submit() {
-  //   // console.log(form)
-  //   addUserNeed({ variables: form })
-  //   toast({
-  //     title: "User need created.",
-  //     description: `"${form.name}" has been created`,
-  //     status: "success",
-  //     duration: 10000,
-  //     isClosable: true,
-  //   })
-  //   onClose()
-  // }
   return (
     <>
       <Button onClick={onOpen}>View more</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{loading ? "Loading" : userNeed?.name || "Lo"}</ModalHeader>
+          <ModalHeader>{loading ? "Loading" : userNeed?.name || "..."}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {loading 
@@ -60,12 +43,14 @@ export default function UserNeed({ id }:any) {
               <>
                 <Badge color="blue.500">Pending</Badge>
                 <Text color="gray.600">{userNeed?.description}</Text>
+                <Text mt="24px" fontWeight="bold">Stakeholder:</Text>
+                <Text fontWeight="bold">{userNeed?.stakeholder?.name}</Text>
+                <Text color="gray.600">{userNeed?.stakeholder?.description}</Text>
               </>
             )}
-
-            
           </ModalBody>
           <ModalFooter>
+            <Button disabled>View stakeholder</Button>
             <IconButton 
               aria-label="Delete User Need" 
               icon={<DeleteIcon />}

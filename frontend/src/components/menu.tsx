@@ -10,6 +10,9 @@ export default function Menu() {
       <ListItem>
         <Link to="/needs">User needs</Link>
       </ListItem>
+      <ListItem>
+        <Link to="/stakeholders">Stakeholders</Link>
+      </ListItem>
     </List>
   )
 }

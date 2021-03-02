@@ -3,6 +3,7 @@ import { CheckCircleIcon } from "@chakra-ui/icons"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Menu from './components/menu'
 import Needs from './pages/needs'
+import Stakeholders from './pages/stakeholders'
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
               </Route>
               <Route path="/needs">
                 <Needs />
+              </Route>
+              <Route path="/stakeholders">
+                <Stakeholders />
               </Route>
             </Switch>
           </GridItem>

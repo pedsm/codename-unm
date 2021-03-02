@@ -1,15 +1,27 @@
 type Query {
   userNeeds: [UserNeed]!
   userNeed(id:ID!): UserNeed
+  stakeholders: [Stakeholder]!
+  stakeholder(id:ID!): Stakeholder
 }
 
 type Mutation {
-  addUserNeed(name: String, description: String): UserNeed!
+  addUserNeed(name: String, description: String, stakeholderId:ID!): UserNeed!
   deleteUserNeed(id:ID!): ID!
+  addStakeholder(name: String, description: String): Stakeholder!
+  deleteStakeholder(id:ID!): ID!
 }
 
 type UserNeed {
   id: ID!
   name: String
   description: String
+  stakeholder: Stakeholder
+}
+
+type Stakeholder {
+  id: ID!
+  name: String
+  description: String
+  userNeeds: [UserNeed]
 }

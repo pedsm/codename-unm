@@ -1,5 +1,6 @@
 import {
   useToast,
+  Text,
   Modal,
   ModalBody,
   ModalHeader,
@@ -11,12 +12,13 @@ import {
   useDisclosure,
   Button,
   IconButton,
-  ModalFooter
+  ModalFooter,
+  Select
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
-import { useMutation } from '@apollo/client'
-import { ADD_USER_NEED, GET_USER_NEEDS } from '../gql'
+import { useMutation, useQuery } from '@apollo/client'
+import { ADD_USER_NEED, GET_STAKEHOLDERS, GET_USER_NEEDS } from '../gql'
 
 function useForm(): any {
   const [form, setForm] = useState({})
@@ -31,9 +33,11 @@ export default function AddUserNeedModal() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { form, setValue } = useForm()
   const toast = useToast()
+  const { data, loading, error } = useQuery(GET_STAKEHOLDERS)
   const [addUserNeed] = useMutation(ADD_USER_NEED, {
     refetchQueries: [{ query: GET_USER_NEEDS }]
   });
+  const stakeholders = data?.stakeholders || []
   function submit() {
     // console.log(form)
     addUserNeed({ variables: form })
@@ -46,6 +50,7 @@ export default function AddUserNeedModal() {
     })
     onClose()
   }
+  console.log(form)
   return (
     <>
       <IconButton icon={<AddIcon/>} m="12px 0" aria-label="Add User Need" onClick={onOpen} />
@@ -55,11 +60,18 @@ export default function AddUserNeedModal() {
           <ModalHeader>Create user need</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input onChange={setValue} name="name" m="5px" placeholder="Title" size="md" />
-            <Textarea onChange={setValue} name="description" m="5px" placeholder="Description" />
+            <Text m="5px" fontWeight="bold">As a</Text>
+            <Select onChange={setValue} name="stakeholderId" m="5px">
+              <option selected disabled>Select a stakeholder...</option>
+              {stakeholders.map((stakeholder:any, i:number) => (
+                <option key={i} value={stakeholder.id}>{stakeholder.name}</option>
+              ))}
+            </Select>
+            <Input onChange={setValue} m="5px" name="name" placeholder="Title" size="md" />
+            <Textarea onChange={setValue} m="5px" name="description" placeholder="Description" />
           </ModalBody>
           <ModalFooter>
-            <Button onClick={submit} m="5px">Create User Need</Button>
+            <Button onClick={submit}>Create User Need</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
