@@ -7,6 +7,7 @@ type Query {
 
 type Mutation {
   addUserNeed(name: String, description: String, stakeholderId:ID!): UserNeed!
+  updateNeedStatus(id:ID!, newStatus:NeedStatus!): UserNeed
   deleteUserNeed(id:ID!): ID!
   addStakeholder(name: String, description: String): Stakeholder!
   deleteStakeholder(id:ID!): ID!

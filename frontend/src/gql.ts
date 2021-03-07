@@ -45,6 +45,16 @@ export const DELETE_USER_NEED = gql`
   }
 `
 
+export const UPDATE_NEED_STATUS = gql`
+mutation($id:ID!, $newStatus:NeedStatus!) {
+  updateNeedStatus(id: $id, newStatus: $newStatus) {
+    id
+    name
+    status
+  }
+}
+`
+
 export const GET_STAKEHOLDERS = gql`
   query {
     stakeholders {

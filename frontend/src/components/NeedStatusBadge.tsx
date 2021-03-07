@@ -7,7 +7,7 @@ const colors = {
   MET: 'green',
 }
 
-enum NeedStatus {
+export enum NeedStatus {
   UNMET,
   RESEARCHING,
   PARTIALLY_MET,

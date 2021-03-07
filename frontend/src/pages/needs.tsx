@@ -19,7 +19,6 @@ export default function Needs() {
   const { loading, error, data } = useQuery(GET_USER_NEEDS)
 
   const userNeeds = data?.userNeeds || []
-  console.log(userNeeds)
 
   return (
     <div>
@@ -27,8 +26,8 @@ export default function Needs() {
       <AddUserNeedsModal />
       {loading && (<Spinner />)}
       <SimpleGrid columns={3} spacing={10}>
-        {userNeeds.map((need: any, i: number) => (
-          <UserNeed key={i} need={need} />
+        {userNeeds.map((need: any) => (
+          <UserNeed key={need.id} need={need} />
         ))}
       </SimpleGrid>
     </div>

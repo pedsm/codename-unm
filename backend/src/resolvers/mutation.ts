@@ -20,6 +20,12 @@ const mutationResolvers = {
     await userNeedRepo.remove([userNeed])
     return id
   },
+  updateNeedStatus: async (_: any, { id, newStatus }) => {
+    const conn = await getConnection()
+    const userNeed = await conn.manager.findOne(UserNeed, id)
+    userNeed.status = newStatus;
+    return await conn.manager.save(userNeed)
+  },
   addStakeholder: async (_: any, { name, description }) => {
     const conn = await getConnection()
     const stakeholder = new Stakeholder()

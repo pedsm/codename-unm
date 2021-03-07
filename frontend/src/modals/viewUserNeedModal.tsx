@@ -7,6 +7,10 @@ import {
   ModalOverlay,
   ModalContent,
   Spinner,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
   Text,
   useDisclosure,
   Button,
@@ -14,11 +18,12 @@ import {
   IconButton
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import { DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useMutation, useQuery } from '@apollo/client'
-import { GET_USER_NEED, DELETE_USER_NEED, GET_USER_NEEDS } from '../gql'
-import NeedStatusBadge from '../components/NeedStatusBadge'
+import { GET_USER_NEED, DELETE_USER_NEED, GET_USER_NEEDS, UPDATE_NEED_STATUS } from '../gql'
+import NeedStatusBadge, { NeedStatus } from '../components/NeedStatusBadge'
 
+const statuses = Object.entries(NeedStatus).slice(0, Object.entries(NeedStatus).length / 2)
 
 export default function UserNeed({ id }:any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -27,6 +32,9 @@ export default function UserNeed({ id }:any) {
   })
   const [deleteUserNeed] = useMutation(DELETE_USER_NEED, {
     refetchQueries: [{ query: GET_USER_NEEDS }],
+  })
+  const [updateStatus] = useMutation(UPDATE_NEED_STATUS, {
+    refetchQueries: [{ query: GET_USER_NEEDS }, { query: GET_USER_NEED, variables: { id } }],
   })
 
   const userNeed = data?.userNeed
@@ -52,6 +60,29 @@ export default function UserNeed({ id }:any) {
             )}
           </ModalBody>
           <ModalFooter>
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                Set Status
+              </MenuButton>
+              <MenuList>
+                {statuses.map(([key, value]:any) => (
+                  <MenuItem onClick={() => {
+                    console.log({
+                        id: userNeed.id,
+                        newStatus: value
+                      }
+
+                    )
+                    updateStatus({
+                      variables: {
+                        id: userNeed.id,
+                        newStatus: value
+                      }
+                    })
+                  }} key={key}>{value.replace('_', ' ')}</MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
             <Link to={`/stakeholder/${userNeed?.stakeholder?.id}`}>
               <Button>View stakeholder</Button>
             </Link>

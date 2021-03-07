@@ -39,7 +39,6 @@ export default function AddUserNeedModal() {
   });
   const stakeholders = data?.stakeholders || []
   function submit() {
-    // console.log(form)
     addUserNeed({ variables: form })
     toast({
       title: "User need created.",
@@ -50,7 +49,6 @@ export default function AddUserNeedModal() {
     })
     onClose()
   }
-  console.log(form)
   return (
     <>
       <IconButton icon={<AddIcon/>} m="12px 0" aria-label="Add User Need" onClick={onOpen} />

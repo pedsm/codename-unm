@@ -22,6 +22,10 @@ export default function Stakeholder() {
   })
 
   const stakeholder = data?.stakeholder
+  const needCount = stakeholder?.userNeeds.length
+  const completionRate = stakeholder == null 
+    ? (stakeholder.userNeeds.filter((need:any) => need.status ==='MET').length / needCount) * 100
+    : 0
 
   return (
     <div>
@@ -40,12 +44,12 @@ export default function Stakeholder() {
           <Flex>
             <Stat>
               <StatLabel>User Needs</StatLabel>
-              <StatNumber>{stakeholder.userNeeds.length}</StatNumber>
+              <StatNumber>{needCount}</StatNumber>
               <StatHelpText>In all statuses</StatHelpText>
             </Stat>
             <Stat>
               <StatLabel>Need completion</StatLabel>
-              <StatNumber>{(stakeholder.userNeeds.filter((need:any) => need.status === 'MET').length / stakeholder.userNeeds.length)*100}%</StatNumber>
+              <StatNumber>{completionRate.toFixed(2)}%</StatNumber>
               <StatHelpText>Of needs are Met</StatHelpText>
             </Stat>
           </Flex>
