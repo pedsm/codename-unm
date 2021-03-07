@@ -6,12 +6,11 @@ import { getConnection } from '../db'
 const queryResolver = {
   userNeeds: async () => {
     const conn = await getConnection()
-    return await conn.manager.find(UserNeed)
+    return await conn.manager.find(UserNeed, { relations: ['stakeholder'] })
   },
   userNeed: async (_: any, { id }) => {
     const conn = await getConnection()
-    const userNeed = await conn.manager.findOne(UserNeed, id)
-    console.log(userNeed.stakeholder)
+    const userNeed = await conn.manager.findOne(UserNeed, id, { relations: ['stakeholder'] })
     return userNeed
   },
   stakeholders: async () => {
@@ -20,10 +19,12 @@ const queryResolver = {
   },
   stakeholder: async (_: any, { id }) => {
     const conn = await getConnection()
-    return await conn.manager.findOne(Stakeholder, id)
-  },
-
-
+    const stakeholder = await conn.manager.findOne(Stakeholder, id, {
+      relations: ['userNeeds']
+    })
+    console.log(stakeholder)
+    return stakeholder
+  }
 }
 
 export default queryResolver

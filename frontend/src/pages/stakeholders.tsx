@@ -16,6 +16,7 @@ import { useQuery } from '@apollo/client'
 import { GET_STAKEHOLDERS } from '../gql'
 import UserNeed from '../modals/viewUserNeedModal'
 import AddStakeholderModal from '../modals/addStakeholderModal'
+import { Link } from 'react-router-dom'
 
 
 export default function Stakeholders() {
@@ -38,7 +39,9 @@ export default function Stakeholders() {
                   {stakeholder.name}
                 </Text>
                 <Text noOfLines={5} color="gray.600">{stakeholder.description}</Text>
-                <Button mt="24px" disabled>View more</Button>
+                <Link to={`stakeholder/${stakeholder.id}`}>
+                  <Button mt="24px">View more</Button>
+                </Link>
               </Box>
               <Spacer />
             </Flex>

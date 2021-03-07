@@ -12,7 +12,7 @@ import { Spinner } from "@chakra-ui/react"
 import { useQuery } from '@apollo/client'
 import AddUserNeedsModal from '../modals/addUserNeedModal'
 import { GET_USER_NEEDS } from '../gql'
-import UserNeed from '../modals/viewUserNeedModal'
+import UserNeed from '../components/UserNeed'
 
 
 export default function Needs() {
@@ -28,24 +28,7 @@ export default function Needs() {
       {loading && (<Spinner />)}
       <SimpleGrid columns={3} spacing={10}>
         {userNeeds.map((need: any, i: number) => (
-          <Box borderWidth="1px" key={i} maxW="sm" p="6" borderRadius="lg">
-            <Flex height="100%" direction="column">
-              <Box>
-                <Text color="gray.500">
-                  {need.stakeholder?.name}
-                </Text>
-                <Text fontWeight="bold">
-                  {need.name}
-                </Text>
-                <Badge color="blue.500">Pending</Badge>
-                <Text noOfLines={5} color="gray.600">{need.description}</Text>
-              </Box>
-              <Spacer />
-              <Box marginTop="24px">
-                <UserNeed id={need.id} />
-              </Box>
-            </Flex>
-          </Box>
+          <UserNeed key={i} need={need} />
         ))}
       </SimpleGrid>
     </div>

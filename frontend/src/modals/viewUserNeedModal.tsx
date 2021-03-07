@@ -13,9 +13,11 @@ import {
   ModalFooter,
   IconButton
 } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_USER_NEED, DELETE_USER_NEED, GET_USER_NEEDS } from '../gql'
+import NeedStatusBadge from '../components/NeedStatusBadge'
 
 
 export default function UserNeed({ id }:any) {
@@ -42,6 +44,7 @@ export default function UserNeed({ id }:any) {
             : (
               <>
                 <Badge color="blue.500">Pending</Badge>
+                <NeedStatusBadge status={userNeed.status} />
                 <Text color="gray.600">{userNeed?.description}</Text>
                 <Text mt="24px" fontWeight="bold">Stakeholder:</Text>
                 <Text fontWeight="bold">{userNeed?.stakeholder?.name}</Text>
@@ -50,7 +53,9 @@ export default function UserNeed({ id }:any) {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button disabled>View stakeholder</Button>
+            <Link to={`/stakeholder/${userNeed?.stakeholder?.id}`}>
+              <Button>View stakeholder</Button>
+            </Link>
             <IconButton 
               aria-label="Delete User Need" 
               icon={<DeleteIcon />}

@@ -16,6 +16,7 @@ type UserNeed {
   id: ID!
   name: String
   description: String
+  status: NeedStatus
   stakeholder: Stakeholder
 }
 
@@ -24,4 +25,11 @@ type Stakeholder {
   name: String
   description: String
   userNeeds: [UserNeed]
+}
+
+enum NeedStatus {
+  UNMET,
+  RESEARCHING,
+  PARTIALLY_MET,
+  MET,
 }

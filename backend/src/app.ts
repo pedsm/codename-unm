@@ -5,6 +5,7 @@ import { ApolloServer, gql } from 'apollo-server-express'
 import { PORT } from './config'
 import Mutation from './resolvers/mutation'
 import Query from './resolvers/query'
+import { NeedStatus } from './entity/UserNeed'
 
 const app = express()
 
@@ -12,6 +13,12 @@ const typeDefs = readFileSync('./schema.gql').toString()
 const resolvers = {
   Query, 
   Mutation,
+  NeedStatus: {
+    UNMET: 0,
+    RESEARCHING: 1,
+    PARTIALLY_MET: 2,
+    MET: 3,
+  }
 }
 
 

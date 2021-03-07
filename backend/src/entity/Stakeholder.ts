@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
 import { UserNeed } from './UserNeed'
 
 @Entity()
@@ -19,7 +19,7 @@ export class Stakeholder {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => UserNeed, (userNeed:UserNeed) => userNeed.id)
+  @OneToMany(() => UserNeed, (userNeed: UserNeed) => userNeed.stakeholder)
   userNeeds: UserNeed[]
 
 }

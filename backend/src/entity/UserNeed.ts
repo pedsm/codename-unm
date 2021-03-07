@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from "typeorm";
+import { Entity, JoinColumn, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from "typeorm";
 import { Stakeholder } from './Stakeholder'
+
+export enum NeedStatus {
+  UNMET,
+  RESEARCHING,
+  PARTIALLY_MET,
+  MET,
+}
 
 @Entity()
 export class UserNeed {
@@ -13,13 +20,16 @@ export class UserNeed {
   @Column()
   description: string;
 
+  @Column('int', { default: NeedStatus.UNMET })
+  status: NeedStatus
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
   
-  @ManyToOne(() => Stakeholder, (stakeholder: Stakeholder) => stakeholder.id, { eager: true })
+  @ManyToOne(() => Stakeholder, (stakeholder: Stakeholder) => stakeholder.userNeeds)
   stakeholder: Stakeholder
 
 }

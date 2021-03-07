@@ -6,6 +6,7 @@ export const GET_USER_NEEDS = gql`
       id
       name
       description
+      status
       stakeholder {
         name
       }
@@ -19,6 +20,7 @@ export const GET_USER_NEED = gql`
       id
       name
       description
+      status
       stakeholder {
         id
         name
@@ -49,6 +51,22 @@ export const GET_STAKEHOLDERS = gql`
       id
       name
       description
+    }
+  }
+`
+
+export const GET_STAKEHOLDER = gql`
+  query($id:ID!) {
+    stakeholder(id:$id) {
+      id
+      name
+      description
+      userNeeds {
+        id
+        name
+        description
+        status
+      }
     }
   }
 `
