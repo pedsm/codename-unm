@@ -43,7 +43,6 @@ export default function UserNeed({ id }:any) {
             ? (<Spinner />)
             : (
               <>
-                <Badge color="blue.500">Pending</Badge>
                 <NeedStatusBadge status={userNeed.status} />
                 <Text color="gray.600">{userNeed?.description}</Text>
                 <Text mt="24px" fontWeight="bold">Stakeholder:</Text>
