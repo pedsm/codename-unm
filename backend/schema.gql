@@ -10,6 +10,7 @@ type Mutation {
   updateNeedStatus(id:ID!, newStatus:NeedStatus!): UserNeed
   deleteUserNeed(id:ID!): ID!
   addStakeholder(name: String, description: String): Stakeholder!
+  editStakeholder(id:ID!, name: String!, description: String!): Stakeholder!
   deleteStakeholder(id:ID!): ID!
 }
 

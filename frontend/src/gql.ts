@@ -91,6 +91,22 @@ export const ADD_STAKEHOLDER = gql`
   }
 `
 
+export const EDIT_STAKEHOLDER = gql`
+  mutation($id:ID!, $name: String!, $description: String!) {
+    editStakeholder(id: $id, name: $name, description: $description) {
+      id
+      name
+      description
+      userNeeds {
+        id
+        name
+        description
+        status
+      }
+    }
+  }
+`
+
 export const DELETE_STAKEHOLDER = gql`
   mutation($id:ID!) {
     deleteStakeholder(id: $id)

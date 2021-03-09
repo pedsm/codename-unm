@@ -1,12 +1,8 @@
 import {
   Text,
   Box,
-  Badge,
-  Heading,
-  SimpleGrid,
   Spacer,
   Flex,
-  Button
 } from '@chakra-ui/react'
 import NeedStatusBadge from '../components/NeedStatusBadge'
 import UserNeedModal from '../modals/viewUserNeedModal'
@@ -20,7 +16,7 @@ export default function UserNeed({ need }: any) {
             {need.stakeholder?.name}
           </Text>
           <Text fontWeight="bold">
-            {need.name}
+            #{need.id} {need.name}
           </Text>
           <NeedStatusBadge status={need.status} />
           <Text noOfLines={5} color="gray.600">{need.description}</Text>
