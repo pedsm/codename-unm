@@ -90,3 +90,9 @@ export const ADD_STAKEHOLDER = gql`
     }
   }
 `
+
+export const DELETE_STAKEHOLDER = gql`
+  mutation($id:ID!) {
+    deleteStakeholder(id: $id)
+  }
+`

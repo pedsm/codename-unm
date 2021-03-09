@@ -3,29 +3,38 @@ import {
   Skeleton,
   Heading,
   SimpleGrid,
+  IconButton,
   Stat,
   Flex,
   StatLabel,
   StatNumber,
   StatHelpText,
 } from '@chakra-ui/react'
-import { useQuery } from '@apollo/client'
-import { GET_STAKEHOLDER } from '../gql'
-import { useRouteMatch } from 'react-router-dom';
+import {
+  DeleteIcon
+} from '@chakra-ui/icons'
+import { useQuery, useMutation } from '@apollo/client'
+import { DELETE_STAKEHOLDER, GET_STAKEHOLDER, GET_STAKEHOLDERS } from '../gql'
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import UserNeed from '../components/UserNeed'
 
 
 export default function Stakeholder() {
   const { id }: any = useRouteMatch().params
+  const history = useHistory()
   const { loading, error, data } = useQuery(GET_STAKEHOLDER, {
     variables: { id }
   })
+  const [deleteStakeholder] = useMutation(DELETE_STAKEHOLDER, {
+    refetchQueries: [{ query: GET_STAKEHOLDERS }]
+  })
 
   const stakeholder = data?.stakeholder
-  const needCount = stakeholder?.userNeeds.length
-  const completionRate = stakeholder == null 
-    ? (stakeholder.userNeeds.filter((need:any) => need.status ==='MET').length / needCount) * 100
-    : 0
+  const needCount = stakeholder?.userNeeds.length || 0
+  const completedNeeds = stakeholder?.userNeeds.filter((need: any) => need.status == 'MET').length
+  const completionRate = needCount === 0 
+    ? '-'
+    :(completedNeeds/needCount * 100).toFixed(2)
 
   return (
     <div>
@@ -36,6 +45,16 @@ export default function Stakeholder() {
       {loading
         ? (<Skeleton height="1em" />)
         : (<Text paddingBottom="1em">{stakeholder?.description}</Text>)}
+      <IconButton 
+        aria-label="Delete User Need" 
+        icon={<DeleteIcon />}
+        onClick={() => {
+          deleteStakeholder({
+            variables: { id: stakeholder.id }
+          })
+          history.push('/stakeholders')
+        }}
+      />
       {loading
         ? (
           <Skeleton height="2em" />
@@ -49,7 +68,7 @@ export default function Stakeholder() {
             </Stat>
             <Stat>
               <StatLabel>Need completion</StatLabel>
-              <StatNumber>{completionRate.toFixed(2)}%</StatNumber>
+              <StatNumber>{completionRate}%</StatNumber>
               <StatHelpText>Of needs are Met</StatHelpText>
             </Stat>
           </Flex>

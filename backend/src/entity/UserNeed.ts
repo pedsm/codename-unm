@@ -29,7 +29,9 @@ export class UserNeed {
   @UpdateDateColumn()
   updatedAt: Date;
   
-  @ManyToOne(() => Stakeholder, (stakeholder: Stakeholder) => stakeholder.userNeeds)
+  @ManyToOne(() => Stakeholder, (stakeholder: Stakeholder) => stakeholder.userNeeds, {
+    onDelete: 'CASCADE'
+  })
   stakeholder: Stakeholder
 
 }

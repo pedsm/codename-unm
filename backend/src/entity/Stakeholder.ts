@@ -19,7 +19,9 @@ export class Stakeholder {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => UserNeed, (userNeed: UserNeed) => userNeed.stakeholder)
+  @OneToMany(() => UserNeed, (userNeed: UserNeed) => userNeed.stakeholder, {
+    onDelete: "CASCADE",
+  })
   userNeeds: UserNeed[]
 
 }
